@@ -1,7 +1,9 @@
 .terminal {
   height: 500px;
+  width: 100vw;
   overflow-y: auto;
-  background-color: #3c3c3c;
+  /* background-color: #3c3c3c; */
+  background-color: #575653;
   color: #c4c4c4;
   padding: 35px 45px;
   font-size: 14px;

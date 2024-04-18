@@ -1,8 +1,9 @@
-import Typewriter from "typewriter-effect";
 import styles from "../Terminal/Terminal.module.css";
 import { useEffect, useState } from "react";
-import { DotLoader } from "react-spinners";
+import { getRootDirRoute } from "../../utils/constants";
 import axios from "axios";
+import TerminalPrompt from "../TeminalPrompt/TerminalPrompt";
+import TerminalPromptReady from "../TeminalPrompt/TerminalPromptReady";
 
 function Terminal() {
   const [currentDir, setCurrentDir] = useState("");
@@ -10,7 +11,7 @@ function Terminal() {
   const [system, setSystem] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getRootDir")
+      .get(getRootDirRoute)
       .then((response) => {
         const rootDir = response.data.rootDir;
         const system = response.data.system;
@@ -32,28 +33,10 @@ function Terminal() {
   return (
     <div className={styles.terminal}>
       <div className={styles.terminal__line}>
-        {isLoading ? (
-          <span>
-            Detecting OS...
-            <DotLoader color="#fff" size={10} />
-          </span>
+         { isLoading ? (
+          <TerminalPrompt />
         ) : (
-          <div>
-            <span>OS detected: {system}</span>
-            <div className={styles.terminal__prompt}>
-              <div className={styles.terminal__prompt__label}>
-                {currentDir}{" "}
-              </div>
-              <div className={styles.terminal__prompt__input}>
-                <Typewriter
-                  onInit={(typewriter) => {
-                    typewriter.typeString("Waiting for prompt").start();
-                  }}
-                />
-                <input type="text" />
-              </div>
-            </div>
-          </div>
+          <TerminalPromptReady system={system} currentDir={currentDir}/>
         )}
       </div>
     </div>

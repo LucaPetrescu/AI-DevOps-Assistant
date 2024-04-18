@@ -1,5 +1,6 @@
 import os
-from flask import Flask, json
+import subprocess
+from flask import Flask, json, request
 from flask_cors import CORS
 from utils import OS_utils
 
@@ -19,6 +20,15 @@ def get_root_dir():
         "system": system
     }
     return json.dumps(data)
+
+@app.route('/executeCommand', methods=['POST'])
+def run_command():
+    system = OS_utils.detect_system()
+    if system == 'Windows':
+        process = subprocess.run('docker "" "info"', shell=True, capture_output=True, text=True)
+    
+    print("aici", request.json)
+    return "Hello"
 
 if __name__ == '__main__':
     
