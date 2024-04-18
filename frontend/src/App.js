@@ -1,9 +1,8 @@
 import Terminal from "./Components/Terminal/Terminal";
-import styles from "./Background.module.css";
 
 function App() {
   return (
-    <div className={styles.background}>
+    <div>
       <Terminal></Terminal>
     </div>
   );
